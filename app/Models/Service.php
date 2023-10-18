@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sponsorship extends Model
+class Service extends Model
 {
     use HasFactory;
 
-    public function apartments()
+    public function apartment()
     {
         return $this->belongsToMany(Apartment::class);
     }
