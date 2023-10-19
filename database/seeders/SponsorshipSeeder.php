@@ -36,19 +36,19 @@ class SponsorshipSeeder extends Seeder
             $newSponsorship->name = $sponsorship[0];
             $newSponsorship->price = $sponsorship[1];
             $newSponsorship->duration = $sponsorship[2];
-            $newSponsorship->save(); 
+            $newSponsorship->save();
         }
 
-        for($i = 1; $i < 100; $i + 3) {
+        for($i = 1; $i < 100; $i = $i + 3) {
             $apartment = Apartment::find($i);
             $rnd = rand(1, 7);
-            // if($rnd < 5) {
-            //     $apartment->sponsorships()->sync([1]);
-            // } elseif ($rnd < 7) {
-            //     $apartment->sponsorships()->sync([2]);
-            // } else {
-            //     $apartment->sponsorships()->sync([3]);
-            // }
+            if($rnd < 5) {
+                $apartment->sponsorships()->sync([1]);
+            } elseif ($rnd < 7) {
+                $apartment->sponsorships()->sync([2]);
+            } else {
+                $apartment->sponsorships()->sync([3]);
+            }
         }
     }
 }
