@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Visit;
 use Illuminate\Database\Seeder;
 
 
@@ -25,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ApartmentSeeder::class,
             MessageSeeder::class,
             ServiceSeeder::class,
+            VisitSeeder::class,
         ]);
     }
 }
