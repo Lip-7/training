@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Visit;
 use Illuminate\Database\Seeder;
-
+use Spoofchecker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             MessageSeeder::class,
             ServiceSeeder::class,
             VisitSeeder::class,
+            SponsorshipSeeder::class
         ]);
     }
 }
