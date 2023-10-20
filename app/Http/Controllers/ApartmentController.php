@@ -14,7 +14,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
-        return view("apartments.index", compact("apartments"));
+        return view ("apartments.index", compact("apartments"));
     }
 
     /**
@@ -38,7 +38,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return 
+        return view ("apartments.show", compact("apartment"));
     }
 
     /**
