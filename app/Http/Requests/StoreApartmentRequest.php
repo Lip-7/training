@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreApartmentRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreApartmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,17 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'max:150', Rule::unique('apartments')],
+            'rooms' => 'nullable',
+            'beds' => 'nullable',
+            'bathrooms' => 'nullable',
+            'mq' => 'nullable',
+            'address' => 'nullable',
+            'photo' => 'nullable',
+            'lat' => 'nullable',
+            'lon' => 'nullable',
+            'visible' => 'nullable',
+            'user_id' => ['nullable', 'exists:users,id']
         ];
     }
 }

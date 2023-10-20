@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -30,7 +31,15 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-    
+        $data = $request->validated();
+        $user_id = ['user_id' => Auth::id()];
+        $data = array_merge($data, $user_id);
+        $apartment = Apartment::create($data);
+        if ($request->has('services')) {
+            $apartment->services()->attach($request->services);
+        }
+
+        return redirect()->route('apartments.index');
     }
 
     /**
