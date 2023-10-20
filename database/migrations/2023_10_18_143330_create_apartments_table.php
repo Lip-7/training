@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('lon',11,8);
             $table->string('photo');
             $table->tinyInteger('visible');
+            //aggiungere slug
         });
     }
 
