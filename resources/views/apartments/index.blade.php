@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <h1 class="text-center">I tuoi appartamenti</h1>
-<a href="#" class="btn btn-primary mb-4 mx-auto">Aggiungi Casa</a>
+<a href="{{route("apartments.create", $apartment)}}" class="btn btn-primary mb-4 mx-auto">Aggiungi Casa</a>
 <div class="container d-flex flex-wrap gap-3">
     @foreach ($apartments as $apartment)
     <div class="card" style="width: 18rem;">
@@ -15,5 +15,5 @@
       </div>
     @endforeach
 </div>
-<a href="#" class="btn btn-primary text-center mt-4 mx-auto">Aggiungi Casa</a>
+<a href="{{route("apartments.create", $apartment)}}" class="btn btn-primary text-center mt-4 mx-auto">Aggiungi Casa</a>
 @endsection
