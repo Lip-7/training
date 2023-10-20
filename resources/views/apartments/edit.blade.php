@@ -1,4 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<h1>Modifica il tuo appartamento: {{$apartment->name}}</h1>
+<h1 class="text-center">Modifica il tuo appartamento: {{$apartment->name}}</h1>
+<div class="container">
+
+</div>
 @endsection
