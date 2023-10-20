@@ -22,7 +22,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        
+        return view('apartments.create');
     }
 
     /**
@@ -30,7 +30,7 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        //
+    
     }
 
     /**
