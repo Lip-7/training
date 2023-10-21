@@ -57,7 +57,8 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $services = Service::all();
-        return view ("apartments.edit", compact("services","apartment"));
+        $checkedServices = $apartment->services;
+        return view ("apartments.edit", compact("services","apartment","checkedServices"));
     }
 
     /**
@@ -65,7 +66,14 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        //
+        $data = $request->validated();
+        $apartment->update($data);
+        if ($request->has("services")) {
+            $apartment->services()->sync($request->services);
+        } else {
+            $apartment->services()->sync([]);
+        }
+        return redirect()->route("apartments.show", compact("$apartment"));
     }
 
     /**
