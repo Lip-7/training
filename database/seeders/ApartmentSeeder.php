@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Models\Apartment;
+use Illuminate\Support\Str;
 
 class ApartmentSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class ApartmentSeeder extends Seeder
             $newApartment = new Apartment();
 
             $newApartment->name = $names[$i];
+            $newApartment->slug = Apartment::generateSlug($newApartment->name, rand(0,1000));
             $newApartment->rooms = $faker->numberBetween(1, 5);
             $newApartment->beds = $faker->numberBetween(1, 5);
             $newApartment->bathrooms = $faker->numberBetween(1, 5);

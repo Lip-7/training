@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Str;
 
 class Apartment extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    public static function generateSlug($name, $id)
+    {
+        return Str::slug($name . '-' . $id, '-');
+    }
 
     public function user()
     {
