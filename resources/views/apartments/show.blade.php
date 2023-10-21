@@ -23,5 +23,13 @@
             </div>
         </div>
     </div>
+    <div class="buttons d-flex justify-content-center gap-5 mt-2">
+        <a href="{{route("apartments.edit", $apartment)}}" class="btn btn-success">Modifica</a>
+        <form action="{{route('apartments.destroy', $apartment)}}" method="POST">
+            @csrf
+              @method('DELETE')
+                <button class="btn btn-danger" type="submit">Rimuovi</button>
+        </form>
+    </div>
 </div>
 @endsection
