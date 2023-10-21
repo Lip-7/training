@@ -2,7 +2,7 @@
 @section('content')
     <h1 class="text-center">Modifica il tuo appartamento: {{ $apartment->name }}</h1>
     <div class="container">
-        <form action="{{ route('apartments.update', $apartment) }}" method="POST">
+        <form action="{{ route('apartments.update', $apartment) }}" method="POST" class="editForm">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -63,10 +63,31 @@
             <div class="mb-3">
                 <label for="photo" class="form-label">Foto</label>
                 <input type="text" value="{{ old('photo', $apartment->photo) }}" placeholder="Inserisci il nome del tuo annuncio" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo">
+                @error('photo')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="mb-3">
                 <label for="visible" class="form-label">Visibile</label>
                 <input type="text" value="{{ old('visible', $apartment->visible) }}" placeholder="Inserisci il nome del tuo annuncio" class="form-control @error('visible') is-invalid @enderror" id="visible" name="visible">
+                @error('visible')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-3 services d-flex gap-3 flex-wrap btn-group">
+                @foreach ($services as $service)
+                <div class="d-flex justify-content-center flex-column border border-2 p-2 rounded form-check">
+                    <input type="checkbox" class="" id="{{$service->id}}" value="{{$service->id}}" name="services[]" {{in_array($service->id, $checkedServices) ? 'checked' : ''}} >
+                    <label for="{{$service->id}}">{{$service->name}}</label>
+                </div>
+                @endforeach
+            </div>
+            <div class="button d-flex justify-content-end py-3">
+                <input type="submit" class="btn btn-primary" value="Modifica">
             </div>
         </form>
     </div>

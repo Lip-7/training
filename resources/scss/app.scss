@@ -10,3 +10,12 @@ $fa-font-path: "../fonts/webfonts" !default;
 
 @import '~bootstrap/scss/bootstrap';
 
+
+/* EDIT APARTMENTS */
+ .editForm{
+    input[type=checkbox]{
+        cursor: pointer;
+    }
+ }
+
+/* /EDIT APARTMENTS */

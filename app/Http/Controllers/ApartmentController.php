@@ -57,7 +57,8 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $services = Service::all();
-        return view ("apartments.edit", compact("services","apartment"));
+        $checkedServices = $apartment->services->pluck('id')->toArray();
+        return view ("apartments.edit", compact("services","apartment","checkedServices"));
     }
 
     /**
@@ -65,7 +66,21 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        //
+        $data = $request->validated();
+        /* dovremmo ricavare lon e lat con una api, per ora inventiamo: */
+        $data['lat'] = 80.00000000;
+        $data['lon'] = 170.00000000;
+        /*  */
+        $apartment->update($data);
+        $data['user_id'] = Auth::id();
+        if ($request->has("services")) {
+            $apartment->services()->sync($request->services);
+        } else {
+            $apartment->services()->sync([]);
+        }
+
+
+        return redirect()->route("apartments.show", compact("apartment"));
     }
 
     /**
