@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -22,7 +24,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        
+        return view('apartments.create');
     }
 
     /**
@@ -30,7 +32,15 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        //
+        $data = $request->validated();
+        $user_id = ['user_id' => Auth::id()];
+        $data = array_merge($data, $user_id);
+        $apartment = Apartment::create($data);
+        if ($request->has('services')) {
+            $apartment->services()->attach($request->services);
+        }
+
+        return redirect()->route('apartments.index');
     }
 
     /**
@@ -46,7 +56,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        $services = Service::all();
+        return view ("apartments.edit", compact("services","apartment"));
     }
 
     /**
@@ -62,6 +73,7 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        //
+        $apartment->delete();
+        return redirect()->route('apartments.index')->with('message', "Your project: '$apartment->name', has been successfully deleted");
     }
 }
