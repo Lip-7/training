@@ -11,7 +11,7 @@ class UpdateApartmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'max:255', Rule::unique('apartments')],
+            'rooms' => 'required|integer|min:1',
+            'beds' => 'required|integer|min:1',
+            'bathrooms' => 'required|integer|min:1',
+            'mq' => 'required|integer|min:1',
+            'address' => 'required|string|max:255',
+            'photo' => ['required', 'image'],
+            'lat' => 'required|numeric|between:-90.00000000,90.00000000',
+            'lon' => 'required|numeric|between:-180.00000000,180.00000000',            
+            'visible' => 'required|boolean',
+            'user_id' => ['required', 'exists:users,id']
         ];
     }
 }
