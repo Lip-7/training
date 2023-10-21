@@ -57,7 +57,7 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         $services = Service::all();
-        $checkedServices = $apartment->services;
+        $checkedServices = $apartment->services->pluck('id')->toArray();
         return view ("apartments.edit", compact("services","apartment","checkedServices"));
     }
 

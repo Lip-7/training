@@ -81,7 +81,7 @@
             <div class="mb-3 services d-flex gap-3 flex-wrap btn-group">
                 @foreach ($services as $service)
                 <div class="d-flex justify-content-center flex-column border border-2 p-2 rounded form-check">
-                    <input type="checkbox" class="" id="{{$service->id}}" value="{{$service->id}}" name="services[]" @checked(in_array($service->id, old('services', []))) >
+                    <input type="checkbox" class="" id="{{$service->id}}" value="{{$service->id}}" name="services[]" {{in_array($service->id, $checkedServices) ? 'checked' : ''}} >
                     <label for="{{$service->id}}">{{$service->name}}</label>
                 </div>
                 @endforeach
