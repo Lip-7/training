@@ -23,4 +23,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource("apartments", ApartmentController::class);
+Route::resource("apartments", ApartmentController::class)->parameters(["apartments" => "apartment:slug"]);
