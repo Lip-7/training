@@ -34,8 +34,6 @@ class ApartmentSeeder extends Seeder
             $latitude = $faker->latitude();
             $longitude = $faker->longitude();
             $newApartment->coordinates = DB::raw("ST_GeomFromText('POINT(" . $longitude . " " . $latitude . ")',0)");
-            //$newApartment->coordinates = DB::raw("POINT(" . $faker->longitude($min = -80, $max = -70) . " " . $faker->latitude($min = 35, $max = 45) . "), 0");
-            //$newApartment->coordinates = 'POINT(40.934278 14.272311)';
             $newApartment->photo = 'https://picsum.photos/500/400';
             $newApartment->visible = 1;
 
