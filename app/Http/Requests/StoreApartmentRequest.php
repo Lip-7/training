@@ -24,6 +24,7 @@ class StoreApartmentRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255', Rule::unique('apartments')->ignore($this->apartment)],
+            'slug' => 'nullable',
             'rooms' => 'required|integer|min:1',
             'beds' => 'required|integer|min:1',
             'bathrooms' => 'required|integer|min:1',

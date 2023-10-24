@@ -13,6 +13,10 @@ class Apartment extends Model
 
     protected $guarded = [];
 
+    //protected $casts = [
+    //    'coordinates' => 'array',
+    //];
+
     public static function generateSlug($name, $id)
     {
         return Str::slug($name . '-' . $id, '-');

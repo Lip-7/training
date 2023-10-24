@@ -7,6 +7,7 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -16,7 +17,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
-        return view ("apartments.index", compact("apartments"));
+        return view ("admin.apartments.index", compact("apartments"));
     }
 
     /**
@@ -24,7 +25,8 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('apartments.create');
+        $services = Service::all();
+        return view('apartments.create', compact('services'));
     }
 
     /**
@@ -35,6 +37,7 @@ class ApartmentController extends Controller
         $data = $request->validated();
         $user_id = ['user_id' => Auth::id()];
         $data = array_merge($data, $user_id);
+        $data['slug'] = Str::slug($data['name']);
         $apartment = Apartment::create($data);
         if ($request->has('services')) {
             $apartment->services()->attach($request->services);
