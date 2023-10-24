@@ -8,7 +8,7 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
                 <input type="text" value="{{ old('name', $apartment->name) }}" placeholder="Inserisci il nome del tuo annuncio" class="form-control @error('name') is-invalid @enderror" id="name"
-                    name="name" required>
+                    name="name" >
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
