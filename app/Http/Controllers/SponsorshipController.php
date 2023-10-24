@@ -46,8 +46,8 @@ class SponsorshipController extends Controller
     public function show(Sponsorship $sponsorship)
     {
         $apartment = Apartment::where('user_id', Auth::id());
-        $user = User::where('id', Auth::id());
-
+        $user = User::where('id', Auth::id())->first();
+        // var_dump($user->name);
         return view('admin.sponsorships.show', compact('apartment', 'user', 'sponsorship'));
     }
 
