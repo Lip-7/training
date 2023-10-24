@@ -26,7 +26,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        return view('apartments.create', compact('services'));
+        return view('admin.apartments.create', compact('services'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ApartmentController extends Controller
     {
         $services = Service::all();
         $checkedServices = $apartment->services->pluck('id')->toArray();
-        return view ("apartments.edit", compact("services","apartment","checkedServices"));
+        return view ("admin.apartments.edit", compact("services","apartment","checkedServices"));
     }
 
     /**
