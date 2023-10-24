@@ -51,7 +51,7 @@
                     </div>
         
                 <button class="btn-primary procedi" type="submit">Procedi al pagamento</button>
-                <button class="btn-danger annulla" type="submit"><a href="{{route('home')}}">Annulla pagamento</a> </button>
+                <button class="btn-danger annulla" type="submit"><a href="{{route('sponsorships.index')}}">Annulla pagamento</a> </button>
             </div>
     
         </form>
