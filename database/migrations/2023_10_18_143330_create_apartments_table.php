@@ -21,8 +21,7 @@ return new class extends Migration
             $table->smallInteger('bathrooms')->unsigned();
             $table->smallInteger('mq')->unsigned();
             $table->string('address');
-            $table->decimal('lat',11,8);
-            $table->decimal('lon',11,8);
+            $table->point('coordinates'); //lon + lat
             $table->string('photo');
             $table->tinyInteger('visible');
             //aggiungere slug

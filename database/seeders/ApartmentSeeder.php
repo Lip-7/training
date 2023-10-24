@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Models\Apartment;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentSeeder extends Seeder
 {
@@ -30,8 +31,9 @@ class ApartmentSeeder extends Seeder
             $newApartment->bathrooms = $faker->numberBetween(1, 5);
             $newApartment->mq = $faker->numberBetween(50, 200);
             $newApartment->address = $faker->streetAddress();
-            $newApartment->lat = $faker->latitude($min = -90, $max = 90);
-            $newApartment->lon = $faker->longitude($min = -180, $max = 180);
+            $latitude = $faker->latitude();
+            $longitude = $faker->longitude();
+            $newApartment->coordinates = DB::raw("ST_GeomFromText('POINT(" . $longitude . " " . $latitude . ")',0)");
             $newApartment->photo = 'https://picsum.photos/500/400';
             $newApartment->visible = 1;
 
