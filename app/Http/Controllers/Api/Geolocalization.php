@@ -30,10 +30,18 @@ class Geolocalization extends Controller
         $reponse = $client->get(env("TOMTOM_URL_BEFORE") . $query . '.json?key=' . $apiKey, ['verify' => false]);
         $decodeResponse = json_decode($reponse->getBody(), true);
         $filteresResponse = [];
+        foreach ($decodeResponse['results'] as $key => $value) {
+            $filteredItems = [
+                "address" => $value["address"],
+                "coordinate" => $value["position"],
 
+            ];
+            array_push($filteresResponse, $filteredItems);
+        }
         return response()->json([
             'success' => true,
-            'response' => json_decode($reponse->getBody()) ,
+            //'response' => json_decode($reponse->getBody()),
+            'shortAnswer' => $filteresResponse,
         ]);
     }
 
