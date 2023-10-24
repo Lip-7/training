@@ -28,6 +28,8 @@ class Geolocalization extends Controller
         }
         $client = new \GuzzleHttp\Client();
         $reponse = $client->get(env("TOMTOM_URL_BEFORE") . $query . '.json?key=' . $apiKey, ['verify' => false]);
+        $decodeResponse = json_decode($reponse->getBody(), true);
+        $filteresResponse = [];
 
         return response()->json([
             'success' => true,
