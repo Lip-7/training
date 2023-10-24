@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class SponsorshipSeeder extends Seeder
 {
@@ -34,6 +35,7 @@ class SponsorshipSeeder extends Seeder
         foreach($sponsorships as $sponsorship){
             $newSponsorship = new Sponsorship();
             $newSponsorship->name = $sponsorship[0];
+            $newSponsorship->slug = Str::slug($sponsorship[0], '-');
             $newSponsorship->price = $sponsorship[1];
             $newSponsorship->duration = $sponsorship[2];
             $newSponsorship->save();

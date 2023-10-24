@@ -12,7 +12,7 @@
                     <div class="card-body">
                       <h5 class="card-title">{{$sponsorship->name}}</h5>
                       <p class="card-text">{{$sponsorship->duration}}</p>
-                      <a href="{{route("sponsorships.show", $sponsorship, ["slug" => $sponsorship->name])}}" class="btn btn-primary">Acquista</a>
+                      <a href="{{route("sponsorships.show", $sponsorship->slug)}}" class="btn btn-primary">Acquista</a>
                     </div>
                   </div>
                 @endforeach
