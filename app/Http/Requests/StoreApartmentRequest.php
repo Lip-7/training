@@ -31,9 +31,9 @@ class StoreApartmentRequest extends FormRequest
             'mq' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
             'photo' => ['required', 'string'],
-            'lat' => 'required|numeric|between:-90.00000000,90.00000000',
-            'lon' => 'required|numeric|between:-180.00000000,180.00000000',
+            'coordinates' => 'nullable',
             'visible' => 'required|boolean',
+            //'visible' => ['required', 'in:true,false'],
             /* 'user_id' => ['required', 'exists:users,id'] */
         ];
     }
