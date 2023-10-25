@@ -16,16 +16,16 @@ class MessageSeeder extends Seeder
 
     {
         $messaggi = config("messaggi");
-        for($i = 0; $i < 130; $i++) {
+        for($i = 0; $i < 13; $i++) {
             $newMessage = new Message();
             $newMessage->name = $faker->firstName();
             $newMessage->lastname = $faker->lastName();
             $newMessage->email = $faker->email();
             $newMessage->text = $messaggi[$i];
-            if($i < 100){
+            if($i < 10){
                 $newMessage->apartment_id = $i + 1;
             } else {
-                $newMessage->apartment_id = $faker->numberBetween(1, 100);
+                $newMessage->apartment_id = $faker->numberBetween(1, 15);
             }
             $newMessage->save();
         }

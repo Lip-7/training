@@ -22,7 +22,7 @@ class ServiceSeeder extends Seeder
             $newService->save();
         }
 
-        for ($i = 1; $i < 101; $i++){
+        for ($i = 1; $i < 15; $i++){
             $numServices = rand(1, 8);
             $usedServices = [];
             for($j = 0; $j < $numServices; $j++) {
