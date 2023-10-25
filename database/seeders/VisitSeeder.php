@@ -15,9 +15,9 @@ class VisitSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for($i = 0; $i < 500; $i++) {
+        for($i = 0; $i < 50; $i++) {
             $newVisit = new Visit();
-            $newVisit->apartment_id = rand(1, 100);
+            $newVisit->apartment_id = rand(1, 15);
             $newVisit->ip = $faker->ipv4();
             $newVisit->date = $faker->dateTimeBetween('-3 months', 'now');
             $newVisit->save();

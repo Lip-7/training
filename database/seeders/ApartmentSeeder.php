@@ -18,29 +18,32 @@ class ApartmentSeeder extends Seeder
 
     {   //far corrispondere lat e long con indirizzo e usare foto case/appartamenti
 
-        $names = config('apartmentsNames');
+        $apartments = config('apartmentsNames');
 
-        for ($i = 0; $i < 100; $i++){
+        for ($i = 0; $i < count($apartments); $i++){
 
             $newApartment = new Apartment();
 
-            $newApartment->name = $names[$i];
+            $newApartment->name = $apartments[$i]['name'];
             $newApartment->slug = Apartment::generateSlug($newApartment->name, rand(0,1000));
             $newApartment->rooms = $faker->numberBetween(1, 5);
             $newApartment->beds = $faker->numberBetween(1, 5);
             $newApartment->bathrooms = $faker->numberBetween(1, 5);
             $newApartment->mq = $faker->numberBetween(50, 200);
-            $newApartment->address = $faker->streetAddress();
-            $latitude = $faker->latitude();
-            $longitude = $faker->longitude();
-            $newApartment->coordinates = DB::raw("ST_GeomFromText('POINT(" . $longitude . " " . $latitude . ")',0)");
-            $newApartment->photo = 'https://picsum.photos/500/400';
-            $newApartment->visible = 1;
+            $newApartment->address = $apartments[$i]['address'];
+            $newApartment->coordinates = DB::raw("ST_GeomFromText('POINT(" . $apartments[$i]['coordinates'] . ")',0)");
+            $newApartment->photo = $apartments[$i]['photo'];
 
-            if($i<50){
+            if($i<10){
                 $newApartment->user_id = $i + 1;
             }else{
-                $newApartment->user_id = $i + 1 - 50;
+                $newApartment->user_id = $i + 1 - 10;
+            }
+
+            if($i == 0) {
+                $newApartment->visible = 0;
+            }else{
+                $newApartment->visible = 1;
             }
 
             $newApartment->save();
