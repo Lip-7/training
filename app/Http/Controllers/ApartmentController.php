@@ -16,9 +16,12 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
-        return view ("admin.apartments.index", compact("apartments"));
+        $user = Auth::user(); 
+        $apartments = $user->apartments; 
+    
+        return view("apartments.index", compact("apartments"));
     }
+    
 
     /**
      * Show the form for creating a new resource.
