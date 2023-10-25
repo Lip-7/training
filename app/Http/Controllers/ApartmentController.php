@@ -16,9 +16,12 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
-        return view ("admin.apartments.index", compact("apartments"));
+        $user = Auth::user(); 
+        $apartments = $user->apartments; 
+    
+        return view("apartments.index", compact("apartments"));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -26,7 +29,15 @@ class ApartmentController extends Controller
     public function create()
     {
         $services = Service::all();
-        return view('admin.apartments.create', compact('services'));
+        // $visibleOptions = ['si', 'no'];
+        // $selectedValue = 'si'; // Qui dovresti avere il valore selezionato dal tuo input radio
+
+        // $visible = false; // Inizializza come false per gestire un valore predefinito
+
+        // if ($selectedValue === 'si') {
+        //     $visible = true;
+        // }
+        return view('admin.apartments.create', compact("services"));
     }
 
     /**
@@ -52,7 +63,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         $visits = $apartment->visits;
-        return view ("apartments.show", compact("apartment", "visits"));
+        return view("apartments.show", compact("apartment", "visits"));
     }
 
     /**
@@ -62,7 +73,7 @@ class ApartmentController extends Controller
     {
         $services = Service::all();
         $checkedServices = $apartment->services->pluck('id')->toArray();
-        return view ("admin.apartments.edit", compact("services","apartment","checkedServices"));
+        return view("admin.apartments.edit", compact("services", "apartment", "checkedServices"));
     }
 
     /**
