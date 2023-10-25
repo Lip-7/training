@@ -103,5 +103,4 @@ return [
         "Villa elegante con piscina riscaldata",
         "Loft artistico in zona trendy",
         "Casa colonica con terreno e frutteto",
-        
 ];
