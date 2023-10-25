@@ -41,7 +41,7 @@ class SponsorshipSeeder extends Seeder
             $newSponsorship->save();
         }
 
-        for($i = 1; $i < 100; $i = $i + 3) {
+        for($i = 1; $i < 13; $i = $i + 3) {
             $apartment = Apartment::find($i);
             $rnd = rand(1, 7);
             if($rnd < 5) {

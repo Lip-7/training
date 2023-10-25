@@ -53,7 +53,8 @@
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Indirizzo</label>
-                <input type="text" value="{{ old('address', $apartment->address) }}" placeholder="Inserisci l'indirizzo dell'appartamento" class="form-control @error('address') is-invalid @enderror" id="address" name="address">
+                <input type="text" value="{{ old('address', $apartment->address) }}" placeholder="Inserisci l'indirizzo dell'appartamento" class="userAddressInput form-control @error('address') is-invalid @enderror" id="address" name="address">
+                <ul class="w-100 userAddressHints"></ul>
                 @error('address')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -91,4 +92,5 @@
             </div>
         </form>
     </div>
+    {{-- <script type="module" src="{{ asset('js/tomseach.js') }}"></script> --}}
 @endsection
