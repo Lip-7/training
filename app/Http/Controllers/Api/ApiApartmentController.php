@@ -18,8 +18,29 @@ class ApiApartmentController extends Controller
         $services = Service::all();
         $sponsorships = Sponsorship::all();
         $visits = Visit::all();
-        //inserire un dato posizione
+        //inserire un dato posizione?
 
         $query = Apartment::query();
+
+        $apartments = $query->get();
+        // if no apartments were found, return an error message
+        if (count($apartments) == 0) {
+            return response()->json([
+                'success' => false,
+                'error' => 'No apartments found',
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'results' => $apartments,
+        ]);
+        // se la struttura offre servizi, includiamoli nella ricerca.
+        // if ($request->has("service") && $requestData["service"] != "") {
+        //     $query->whereHas("services", function ($query) use ($requestData) {
+        //         $query->select(DB::raw("apartment_id"))
+        //             ->groupBy("apartment_id")
+        //     });
+        // }
+
     }
 }
