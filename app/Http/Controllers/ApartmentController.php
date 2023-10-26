@@ -50,6 +50,7 @@ class ApartmentController extends Controller
         $user_id = ['user_id' => Auth::id()];
         $data = array_merge($data, $user_id);
         $data['slug'] = Str::slug($data['name']);
+        $data['coordinates'] = DB::raw("ST_GeomFromText('POINT(" . $data['coordinates'] . ")',0)");
         $apartment = Apartment::create($data);
         if ($request->has('services')) {
             $apartment->services()->attach($request->services);

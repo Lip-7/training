@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-3">
                 <label for="mq" class="form-label">Mq</label>
-                <input type="text" class="form-control @error('mq') is-invalid            
+                <input type="text" class="form-control @error('mq') is-invalid
                 @enderror"
                     id="mq" name="mq" value="{{ old('mq') }}">
                 @error('mq')
@@ -33,11 +33,13 @@
                     </div>
                 @enderror
             </div>
-            <div class="col-9">
+            <div class="col-9 position-relative">
                 <label for="address" class="form-label">Indirizzo</label>
-                <input type="text" class="form-control @error('address') is-invalid           
+                <input type="text" class="form-control userAddressInput @error('address') is-invalid
                 @enderror"
                     id="address" name="address" value="{{ old('address') }}">
+                <input type="hidden" name="coordinates" id="coordinates" value="">
+                <ul class="w-100 userAddressHints p-1"></ul>
                 @error('address')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -46,7 +48,7 @@
             </div>
             <div class="col-12">
                 <label for="photo" class="form-label">Foto</label>
-                <input type="text" class="form-control @error('photo') is-invalid           
+                <input type="text" class="form-control @error('photo') is-invalid
                 @enderror"
                     id="photo" name="photo" value="{{ old('photo') }}">
                 @error('photo')
@@ -101,7 +103,7 @@
                 @foreach ($services as $service)
                     <div class="d-flex justify-content-center flex-column border border-2 p-2 rounded form-check">
                         <input type="checkbox"
-                            class="@error('service->id') is-invalid           
+                            class="@error('service->id') is-invalid
                         @enderror"
                             id="service-{{ $service->id }}" value="{{ $service->id }}" name="services[]"
                             @checked(in_array($service->id, old('service', [])))>
