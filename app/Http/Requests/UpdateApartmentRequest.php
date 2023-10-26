@@ -30,8 +30,7 @@ class UpdateApartmentRequest extends FormRequest
             'mq' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
             'photo' => ['required', 'string'],
-            'lat' => 'numeric|between:-90.00000000,90.00000000',
-            'lon' => 'numeric|between:-180.00000000,180.00000000',
+            'coordinates' => 'string',
             'visible' => 'required|boolean',
             /* 'user_id' => ['required', 'exists:users,id'] */
         ];

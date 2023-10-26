@@ -24,10 +24,69 @@
                     </div>
                 @enderror
             </div>
-            <div class="col-9">
+            <div class="col-9 position-relative">
                 <label for="address" class="form-label">Indirizzo</label>
                 <input type="text" value="{{ old('address', $apartment->address) }}" placeholder="Inserisci l'indirizzo dell'appartamento" class="userAddressInput form-control @error('address') is-invalid @enderror" id="address" name="address">
-                <ul class="w-100 userAddressHints"></ul>
+                <input type="hidden" name="coordinates" id="coordinates" value="">
+                <ul class="w-100 userAddressHints p-1"></ul>
+                @error('address')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-10">
+                <label for="photo" class="form-label">Foto</label>
+                <input type="text" value="{{ old('photo', $apartment->photo) }}" placeholder="Inserisci il nome del tuo annuncio" class="form-control @error('photo') is-invalid @enderror" id="photo" name="photo">
+                @error('photo')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-md-3">
+                <label for="rooms" class="form-label">Camere</label>
+                <input type="number" value="{{ old('rooms', $apartment->rooms) }}" placeholder="Inserisci il numero di stanze" class="form-control @error('rooms') is-invalid @enderror" id="rooms" name="rooms">
+                @error('rooms')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-md-3">
+                <label for="beds" class="form-label">Letti</label>
+                <input type="number" value="{{ old('beds', $apartment->beds) }}" placeholder="Inserisci il numero di posti letto" class="form-control @error('beds') is-invalid @enderror" id="beds" name="beds">
+                @error('beds')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-md-3">
+                <label for="bathrooms" class="form-label">Bagni</label>
+                <input type="number" value="{{ old('bathrooms', $apartment->bathrooms) }}" placeholder="Inserisci il numeri di bagni" class="form-control @error('bathrooms') is-invalid @enderror" id="bathrooms" name="bathrooms">
+                @error('bathrooms')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            
+            
+            <div class="mb-3">
+                <label for="mq" class="form-label">Mq</label>
+                <input type="text" value="{{ old('mq', $apartment->mq) }}" placeholder="Inserisci la grandezza dell'abitazione in metri quadri" class="form-control @error('mq') is-invalid @enderror" id="mq" name="mq">
+                @error('mq')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-9 position-relative">
+                <label for="address" class="form-label">Indirizzo</label>
+                <input type="text" value="{{ old('address', $apartment->address) }}" placeholder="Inserisci l'indirizzo dell'appartamento" class="userAddressInput form-control @error('address') is-invalid @enderror" id="address" name="address">
+                <input type="hidden" name="coordinates" id="coordinates" value="">
+                <ul class="w-100 userAddressHints p-1"></ul>
                 @error('address')
                     <div class="invalid-feedback">
                         {{ $message }}
