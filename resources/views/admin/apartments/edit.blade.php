@@ -54,7 +54,7 @@
             <div class="mb-3 position-relative">
                 <label for="address" class="form-label">Indirizzo</label>
                 <input type="text" value="{{ old('address', $apartment->address) }}" placeholder="Inserisci l'indirizzo dell'appartamento" class="userAddressInput form-control @error('address') is-invalid @enderror" id="address" name="address">
-                <input type="hidden" name="coordinates" id="coordinates">
+                <input type="hidden" name="coordinates" id="coordinates" value="">
                 <ul class="w-100 userAddressHints p-1"></ul>
                 @error('address')
                     <div class="invalid-feedback">

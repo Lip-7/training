@@ -7,6 +7,7 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
@@ -16,12 +17,12 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $user = Auth::user(); 
-        $apartments = $user->apartments; 
-    
+        $user = Auth::user();
+        $apartments = $user->apartments;
+
         return view("admin.apartments.index", compact("apartments"));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -83,10 +84,10 @@ class ApartmentController extends Controller
     {
         $data = $request->validated();
         /* dovremmo ricavare lon e lat con una api, per ora inventiamo: */
-        $data['lat'] = 80.00000000;
-        $data['lon'] = 170.00000000;
         /*  */
+        $data['coordinates'] = DB::raw("ST_GeomFromText('POINT(" . $data['coordinates'] . ")',0)");
         $apartment->update($data);
+
         $data['user_id'] = Auth::id();
         if ($request->has("services")) {
             $apartment->services()->sync($request->services);

@@ -2,8 +2,7 @@ import axios from "axios";
 
 function getCoordinates(data) {
     const userCoordinates = data.coordinate;
-    const result = userCoordinates.lon + ' ' + userCoordinates.lat;
-    coordinateInput.value = result;
+    return userCoordinates.lon + ' ' + userCoordinates.lat;
 }
 
 function generateHints(hints) {
