@@ -1,5 +1,4 @@
-@use './partials/variables' as *;
-
+@use "./partials/variables" as *;
 
 $fa-font-path: "../fonts/webfonts" !default;
 
@@ -8,14 +7,34 @@ $fa-font-path: "../fonts/webfonts" !default;
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
-@import '~bootstrap/scss/bootstrap';
-
+@import "~bootstrap/scss/bootstrap";
 
 /* EDIT APARTMENTS */
- .editForm{
-    input[type=checkbox]{
+.editForm {
+    input[type="checkbox"] {
         cursor: pointer;
     }
- }
+}
 
 /* /EDIT APARTMENTS */
+
+/* ADDRESS SEARCH */
+.userAddressHints {
+    list-style: none;
+    position: absolute;
+    background-color: white;
+    top: 100%;
+    li {
+        color: grey;
+        border: 1px solid var(--bs-border-color);
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 4px 8px;
+        &:hover{
+            background-color: rgb(197, 197, 197);
+            color: black;
+        }
+    }
+}
+
+/* /ADDRESS SEARCH */
