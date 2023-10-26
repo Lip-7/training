@@ -63,7 +63,7 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         $visits = $apartment->visits;
-        return view("apartments.show", compact("apartment", "visits"));
+        return view("admin.apartments.show", compact("apartment", "visits"));
     }
 
     /**
@@ -83,8 +83,8 @@ class ApartmentController extends Controller
     {
         $data = $request->validated();
         /* dovremmo ricavare lon e lat con una api, per ora inventiamo: */
-        $data['lat'] = 80.00000000;
-        $data['lon'] = 170.00000000;
+        // $data['lat'] = 80.00000000;
+        // $data['lon'] = 170.00000000;
         /*  */
         $apartment->update($data);
         $data['user_id'] = Auth::id();
