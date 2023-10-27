@@ -10,6 +10,8 @@ use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\map;
+
 class ApiApartmentController extends Controller
 {
     public function index(Request $request)
@@ -23,17 +25,47 @@ class ApiApartmentController extends Controller
 
         $query = Apartment::query();
 
-        $apartments = $query->get();
+
+        $longitude = 41.90651837341677;
+        $latitude = 12.466003738125943;
+        $distanceInKm = 50;
+
+        $apartments = Apartment::selectRaw(
+            "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
+        )
+            ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $distanceInKm])
+            ->orderBy('distance', 'asc')
+            ->get();
+
+        /*
+
+        find COORDINATES
+        $coordinates = DB::table('apartments')
+            ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
+            ->where('id', 1)
+            ->first(); */
+
+
         // if no apartments were found, return an error message
-        if (count($apartments) == 0) {
+        /* if (count($apartments) == 0) {
             return response()->json([
                 'success' => false,
                 'error' => 'No apartments found',
             ]);
-        }
+        } */
+        $sherableApartments = array_map(function ($apartment) {
+            $apartment['coordinates'] = DB::table('apartments')
+            ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
+            ->where('id', $apartment['id'])
+            ->first();
+            return $apartment;
+        }, $apartments->toArray());
+
+        /* dd($apartments->toArray()); */
+
         return response()->json([
             'success' => true,
-            'results' => $apartments,
+            'results' => $sherableApartments,
         ]);
         // se la struttura offre servizi, includiamoli nella ricerca.
         // if ($request->has("service") && $requestData["service"] != "") {
