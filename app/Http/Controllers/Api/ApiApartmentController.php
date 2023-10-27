@@ -25,17 +25,27 @@ class ApiApartmentController extends Controller
 
         $query = Apartment::query();
 
+        if (isset($request->lat) && isset($request->lon)) {
+            $longitude = $request->lon;
+            $latitude = $request->lat;
+            $distanceInKm = 50;
 
-        $longitude = 41.90651837341677;
-        $latitude = 12.466003738125943;
-        $distanceInKm = 50;
+            $apartments = Apartment::selectRaw(
+                "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
+            )
+                ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $distanceInKm])
+                ->orderBy('distance', 'asc')
+                ->get();
 
-        $apartments = Apartment::selectRaw(
-            "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
-        )
-            ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $distanceInKm])
-            ->orderBy('distance', 'asc')
-            ->get();
+            $sherableApartments = array_map(function ($apartment) {
+                $apartment['coordinates'] = DB::table('apartments')
+                    ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
+                    ->where('id', $apartment['id'])
+                    ->first();
+                return $apartment;
+            }, $apartments->toArray());
+        }
+
 
         /*
 
@@ -53,13 +63,7 @@ class ApiApartmentController extends Controller
                 'error' => 'No apartments found',
             ]);
         } */
-        $sherableApartments = array_map(function ($apartment) {
-            $apartment['coordinates'] = DB::table('apartments')
-            ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
-            ->where('id', $apartment['id'])
-            ->first();
-            return $apartment;
-        }, $apartments->toArray());
+
 
         /* dd($apartments->toArray()); */
 
