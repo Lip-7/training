@@ -6,12 +6,19 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Apartment::class, "apartment");
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,8 +34,9 @@ class ApartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Apartment $apartment): RedirectResponse
     {
+        $this->authorize('create', Apartment::class);
         $services = Service::all();
         // $visibleOptions = ['si', 'no'];
         // $selectedValue = 'si'; // Qui dovresti avere il valore selezionato dal tuo input radio
@@ -62,7 +70,7 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment)
+    public function show(Apartment $apartment): RedirectResponse
     {
         $visits = $apartment->visits;
         return view("admin.apartments.show", compact("apartment", "visits"));
@@ -73,6 +81,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+        // $this->authorize('edit', $apartment);
         $services = Service::all();
         $checkedServices = $apartment->services->pluck('id')->toArray();
         return view("admin.apartments.edit", compact("services", "apartment", "checkedServices"));
@@ -81,8 +90,9 @@ class ApartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment)
+    public function update(UpdateApartmentRequest $request, Apartment $apartment): RedirectResponse
     {
+        $this->authorize('update', $apartment);
         $data = $request->validated();
         /* dovremmo ricavare lon e lat con una api, per ora inventiamo: */
         /*  */
@@ -105,6 +115,7 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+        $this->authorize('delete', $apartment);
         $apartment->delete();
         return redirect()->route('apartments.index')->with('message', "Your project: '$apartment->name', has been successfully deleted");
     }

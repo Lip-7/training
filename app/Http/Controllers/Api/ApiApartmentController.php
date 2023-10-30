@@ -29,7 +29,7 @@ class ApiApartmentController extends Controller
             $longitude = $request->lon;
             $latitude = $request->lat;
             $distanceInKm = 50;
-
+            
             $apartments = Apartment::selectRaw(
                 "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
             )
