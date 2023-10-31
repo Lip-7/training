@@ -36,7 +36,6 @@ class ApartmentController extends Controller
      */
     public function create(Apartment $apartment)
     {
-        $this->authorize('create', Apartment::class);
         $services = Service::all();
         // $visibleOptions = ['si', 'no'];
         // $selectedValue = 'si'; // Qui dovresti avere il valore selezionato dal tuo input radio
@@ -92,7 +91,6 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        $this->authorize('update', $apartment);
         $data = $request->validated();
         /* dovremmo ricavare lon e lat con una api, per ora inventiamo: */
         /*  */
@@ -115,7 +113,6 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        $this->authorize('delete', $apartment);
         $apartment->delete();
         return redirect()->route('apartments.index')->with('message', "Your project: '$apartment->name', has been successfully deleted");
     }
