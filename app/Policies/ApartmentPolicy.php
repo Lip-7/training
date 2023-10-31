@@ -16,7 +16,7 @@ class ApartmentPolicy
     {
         return $user !== null
         ? Response::allow()
-        : Response::deny('You do not own this apartment.');
+        : Response::denyWithStatus(404,'Apartment not found');
     }
 
     /**
@@ -26,7 +26,7 @@ class ApartmentPolicy
     {
         return $user->id === $apartment->user_id
             ? Response::allow()
-            : Response::deny('You do not own this apartment.');
+            : Response::denyWithStatus(404,'Apartment not found');
     }
 
     /**
@@ -36,7 +36,7 @@ class ApartmentPolicy
     {
         return $user != null
             ? Response::allow()
-            : Response::deny('You do not own this apartment.');
+            : Response::denyWithStatus(404,'Apartment not found');
     }
 
     /**
@@ -46,7 +46,7 @@ class ApartmentPolicy
     {
         return $user->id === $apartment->user_id
             ? Response::allow()
-            : Response::deny('You do not own this apartment.');
+            : Response::denyWithStatus(404,'Apartment not found');
     }
 
     /**
