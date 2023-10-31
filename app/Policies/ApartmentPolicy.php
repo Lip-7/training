@@ -52,7 +52,7 @@ class ApartmentPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Apartment $apartment): Response
+    public function delete(User $user, Apartment $apartment)
     {
         return $user->id === $apartment->user_id;
     }
@@ -60,7 +60,7 @@ class ApartmentPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Apartment $apartment): Response
+    public function restore(User $user, Apartment $apartment)
     {
         //
     }
@@ -68,7 +68,7 @@ class ApartmentPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Apartment $apartment): Response
+    public function forceDelete(User $user, Apartment $apartment)
     {
         //
     }
