@@ -12,7 +12,7 @@ class ApartmentPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): Response
+    public function viewAny(User $user)
     {
         return $user !== null
         ? Response::allow()
@@ -22,7 +22,7 @@ class ApartmentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Apartment $apartment): Response
+    public function view(User $user, Apartment $apartment)
     {
         return $user->id === $apartment->user_id
             ? Response::allow()
@@ -32,9 +32,9 @@ class ApartmentPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, Apartment $apartment): Response
+    public function create(User $user)
     {
-        return $user->id === $apartment->user_id
+        return $user != null
             ? Response::allow()
             : Response::deny('You do not own this apartment.');
     }
@@ -42,7 +42,7 @@ class ApartmentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Apartment $apartment): Response
+    public function update(User $user, Apartment $apartment)
     {
         return $user->id === $apartment->user_id
             ? Response::allow()
