@@ -34,7 +34,7 @@ class ApartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Apartment $apartment): RedirectResponse
+    public function create(Apartment $apartment)
     {
         $this->authorize('create', Apartment::class);
         $services = Service::all();
@@ -70,7 +70,7 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment): RedirectResponse
+    public function show(Apartment $apartment)
     {
         $visits = $apartment->visits;
         return view("admin.apartments.show", compact("apartment", "visits"));
@@ -90,7 +90,7 @@ class ApartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment): RedirectResponse
+    public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         $this->authorize('update', $apartment);
         $data = $request->validated();
