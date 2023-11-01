@@ -28,12 +28,12 @@ class ApiApartmentController extends Controller
         if (isset($request->lat) && isset($request->lon)) {
             $longitude = $request->lon;
             $latitude = $request->lat;
-            $distanceInKm = isset($request->radius) ? $request->radius : 20;
+            $radius = isset($request->radius) ? $request->radius : 20;
 
-            $apartments = Apartment::selectRaw(
+            /* $apartments = Apartment::selectRaw(
                 "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
             )
-                ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $distanceInKm])
+                ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $radius])
                 ->orderBy('distance', 'asc')
                 ->get();
 
@@ -43,7 +43,12 @@ class ApiApartmentController extends Controller
                     ->where('id', $apartment['id'])
                     ->first();
                 return $apartment;
-            }, $apartments->toArray());
+            }, $apartments->toArray()); */
+
+
+            $sherableApartments = Apartment::near($longitude, $latitude, $radius)->get();
+
+
         }
 
         return response()->json([
