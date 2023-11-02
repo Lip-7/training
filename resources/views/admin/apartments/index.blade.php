@@ -3,7 +3,7 @@
   <div class="container">
     <h3 class="text-center mb-5">I Tuoi Appartamenti</h3>
     @if (count($apartments) > 0)
-      <a href="{{ route("apartments.create") }}" class="btn btn-outline-dark mb-4 mx-auto">Aggiungi un nuovo appartamento</a>  
+      <a href="{{ route("apartments.create") }}" class="btn btn-outline-dark mb-4 mx-auto">Aggiungi un nuovo appartamento</a>
     @endif
     <div class="row">
       @forelse ($apartments as $apartment)
@@ -19,7 +19,7 @@
                   <p class="card-text text-muted">{{ $apartment->address }}</p>
                 </div>
               </div>
-              <div class="col-2 d-flex flex-column py-4 justify-content-between px-3">
+              <div class="col-12 col-lg-2 d-flex flex-column justify-content-between gap-2 p-3">
                 <a href="{{ route("apartments.show", $apartment) }}" class="btn btn-success">
                   <i class="fas fa-eye me-2"></i>Dettagli
                 </a>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
@@ -13,9 +14,13 @@ class Apartment extends Model
 
     protected $guarded = [];
 
-    //protected $casts = [
-    //    'coordinates' => 'array',
-    //];
+    public function scopeNear(Builder $query, $latitude, $longitude, $radius): Builder
+    {
+
+        return $query->selectRaw("user_id, name, slug, rooms, beds, bathrooms, mq, address, photo, visible, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance, ST_X(coordinates) as lat, ST_Y(coordinates) as lon")
+            ->whereRaw('ST_Distance(coordinates, Point(?, ?)) <= ?', [$longitude, $latitude, $radius])
+            ->orderBy('distance', 'asc');
+    }
 
     public static function generateSlug($name, $id)
     {

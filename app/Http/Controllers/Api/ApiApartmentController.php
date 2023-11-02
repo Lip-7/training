@@ -28,12 +28,12 @@ class ApiApartmentController extends Controller
         if (isset($request->lat) && isset($request->lon)) {
             $longitude = $request->lon;
             $latitude = $request->lat;
-            $distanceInKm = 50;
+            $radius = isset($request->radius) ? $request->radius : 20;
 
-            $apartments = Apartment::selectRaw(
+            /* $apartments = Apartment::selectRaw(
                 "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
             )
-                ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $distanceInKm])
+                ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $radius])
                 ->orderBy('distance', 'asc')
                 ->get();
 
@@ -43,29 +43,13 @@ class ApiApartmentController extends Controller
                     ->where('id', $apartment['id'])
                     ->first();
                 return $apartment;
-            }, $apartments->toArray());
+            }, $apartments->toArray()); */
+
+
+            $sherableApartments = Apartment::near($longitude, $latitude, $radius)->get();
+
+
         }
-
-
-        /*
-
-        find COORDINATES
-        $coordinates = DB::table('apartments')
-            ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
-            ->where('id', 1)
-            ->first(); */
-
-
-        // if no apartments were found, return an error message
-        /* if (count($apartments) == 0) {
-            return response()->json([
-                'success' => false,
-                'error' => 'No apartments found',
-            ]);
-        } */
-
-
-        /* dd($apartments->toArray()); */
 
         return response()->json([
             'success' => true,

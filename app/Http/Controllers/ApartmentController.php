@@ -6,12 +6,19 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Service;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Apartment::class, "apartment");
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +34,7 @@ class ApartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Apartment $apartment)
     {
         $services = Service::all();
         // $visibleOptions = ['si', 'no'];
@@ -73,6 +80,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
+        // $this->authorize('edit', $apartment);
         $services = Service::all();
         $checkedServices = $apartment->services->pluck('id')->toArray();
         return view("admin.apartments.edit", compact("services", "apartment", "checkedServices"));
