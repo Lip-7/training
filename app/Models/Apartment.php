@@ -17,7 +17,7 @@ class Apartment extends Model
     public function scopeNear(Builder $query, $latitude, $longitude, $radius): Builder
     {
 
-        return $query->selectRaw("user_id, name, slug, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance, ST_X(coordinates) as lat, ST_Y(coordinates) as lon")
+        return $query->selectRaw("user_id, name, slug, rooms, beds, bathrooms, mq, address, photo, visible, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance, ST_X(coordinates) as lat, ST_Y(coordinates) as lon")
             ->whereRaw('ST_Distance(coordinates, Point(?, ?)) <= ?', [$longitude, $latitude, $radius])
             ->orderBy('distance', 'asc');
     }
