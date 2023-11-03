@@ -2,7 +2,7 @@
 @section('content')
     <h1 class="text-center">Modifica il tuo appartamento: {{ $apartment->name }}</h1>
     <div class="container">
-        <form action="{{ route('apartments.update', $apartment) }}" method="POST" class="editForm row g-3">
+        <form action="{{ route('apartments.update', $apartment) }}" method="POST" class="editForm row g-3" id="form">
             @csrf
             @method('PUT')
             <div class="col-md-6">
@@ -106,5 +106,6 @@
     </div>
     {{-- <script type="module" src="{{ asset('js/tomseach.js') }}"></script> --}}
 
-    {{-- <script src="{{asset('js/editValidation.js')}}"></script> --}}
+
+
 @endsection
