@@ -14,6 +14,12 @@ class Apartment extends Model
 
     protected $guarded = [];
 
+    public function scopePremium(Builder $query) {
+        return $query->whereHas('sponsorships', function (Builder $query) {
+            return $query->where('apartment_sponsorship.expire_date', '>=', now('Europe/Rome'));
+        });
+    }
+
     public function scopeNear(Builder $query, $latitude, $longitude, $radius): Builder
     {
 
@@ -49,6 +55,6 @@ class Apartment extends Model
 
     public function sponsorships()
     {
-        return $this->belongsToMany(Sponsorship::class);
+        return $this->belongsToMany(Sponsorship::class)->withPivot('expire_date');
     }
 }

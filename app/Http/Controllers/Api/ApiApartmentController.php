@@ -14,6 +14,14 @@ use function PHPSTORM_META\map;
 
 class ApiApartmentController extends Controller
 {
+    public function premium(Request $request)
+    {
+        $apartments = Apartment::premium()->get();
+        return response()->json([
+            'success' => true,
+            'data' => $apartments
+        ], 200);
+    }
     public function index(Request $request)
     {
         $requestData = $request->all();
