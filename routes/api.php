@@ -23,5 +23,6 @@ Route::post('/register-visit', [VisitController::class, 'store']);
 
 
 Route::get("/apartments", [ApiApartmentController::class, "index"]);
+Route::get("/search", [ApiApartmentController::class, "search"]);
 Route::get("/premium", [ApiApartmentController::class, "premium"]);
-Route::get('/search', [Geolocalization::class, 'search']);
+Route::get('/geoSearch', [Geolocalization::class, 'search']);

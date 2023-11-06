@@ -27,7 +27,7 @@ function search() {
     timeOut = setTimeout(() => {
         let userSearch = addressInput.value;
         if (userSearch.length > 6) {
-            axios.get('http://127.0.0.1:8000/api/search', {
+            axios.get('http://127.0.0.1:8000/api/geoSearch', {
                 params: {
                   query: userSearch
                 }
