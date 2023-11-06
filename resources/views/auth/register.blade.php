@@ -87,4 +87,29 @@
             </div>
         </div>
     </div>
+    <script>
+        const formRegistered = document.getElementById("form-register");
+        console.log(formRegistered);
+        const button = document.getElementById("button-register");
+        console.log(button);
+
+        button.addEventListener("click", function(e) {
+            e.preventDefault();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("password-confirm").value;
+            const errorPassword = document.getElementById("error-password");
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+
+            if (name === "" || email === "") {
+                errorPassword.textContent = "Tutti i campi sono obbligatori"
+            } else if (password !== confirmPassword) {
+                errorPassword.textContent = "La password non coincide";
+            } else {
+                formRegistered.submit();
+            }
+
+        });
+    </script>
 @endsection
