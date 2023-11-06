@@ -7,6 +7,7 @@ use App\Models\Sponsorship;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class SponsorshipSeeder extends Seeder
 {
@@ -45,11 +46,11 @@ class SponsorshipSeeder extends Seeder
             $apartment = Apartment::find($i);
             $rnd = rand(1, 7);
             if($rnd < 5) {
-                $apartment->sponsorships()->sync([1]);
+                $apartment->sponsorships()->sync([1 => ['expire_date' => now('Europe/Rome')->addWeek()]]);
             } elseif ($rnd < 7) {
-                $apartment->sponsorships()->sync([2]);
+                $apartment->sponsorships()->sync([2 => ['expire_date' => now('Europe/Rome')->addWeek()]]);
             } else {
-                $apartment->sponsorships()->sync([3]);
+                $apartment->sponsorships()->sync([3 => ['expire_date' => now('Europe/Rome')->addWeek()]]);
             }
         }
     }

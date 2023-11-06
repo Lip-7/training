@@ -14,6 +14,21 @@ use function PHPSTORM_META\map;
 
 class ApiApartmentController extends Controller
 {
+    public function premium(Request $request)
+    {
+        $apartments = Apartment::premium()->get();
+        $sherableApartments = array_map(function ($apartment) {
+            $apartment['coordinates'] = DB::table('apartments')
+                ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
+                ->where('id', $apartment['id'])
+                ->first();
+            return $apartment;
+        }, $apartments->toArray());
+        return response()->json([
+            'success' => true,
+            'data' => $sherableApartments
+        ]);
+    }
     public function index(Request $request)
     {
         $requestData = $request->all();
