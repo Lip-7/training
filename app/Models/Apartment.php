@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
@@ -24,7 +25,7 @@ class Apartment extends Model
     public function scopeNear(Builder $query, $latitude, $longitude, $radius): Builder
     {
 
-        return $query->selectRaw("user_id, name, slug, rooms, beds, bathrooms, mq, address, photo, visible, ST_Distance(coordinates, POINT(?, ?)) as distance, ST_X(coordinates) as lat, ST_Y(coordinates) as lon", [$longitude, $latitude])
+        return $query->selectRaw("*, ST_Distance(coordinates, POINT(?, ?)) as distance", [$longitude, $latitude])
             ->whereRaw('ST_Distance_Sphere(coordinates, Point(?, ?)) <= ?', [$longitude, $latitude, $radius])
             ->orderBy('distance', 'asc');
     }
@@ -57,5 +58,27 @@ class Apartment extends Model
     public function sponsorships()
     {
         return $this->belongsToMany(Sponsorship::class)->withPivot('expire_date');
+    }
+
+    protected function distance():Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => number_format($value * 1000, 2, ',', ''),
+        );
+    }
+    protected function coordinates():Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Apartment::formattedCoordinates($value)
+
+        );
+    }
+
+    protected function formattedCoordinates($coordinates)
+    {
+        return Apartment::query()
+        ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
+        ->where('coordinates', $coordinates)
+        ->first();
     }
 }
