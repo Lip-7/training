@@ -17,64 +17,32 @@ class ApiApartmentController extends Controller
 {
     public function premium(Request $request)
     {
-        $apartments = Apartment::premium()->get();
-        $sherableApartments = array_map(function ($apartment) {
-            $apartment['coordinates'] = DB::table('apartments')
-                ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
-                ->where('id', $apartment['id'])
-                ->first();
-            return $apartment;
-        }, $apartments->toArray());
+        $apartments = Apartment::premium()
+        ->visible()
+        ->get();
         return response()->json([
             'success' => true,
-            'data' => $sherableApartments
+            'data' => $apartments
         ]);
     }
     public function index(Request $request)
     {
-        if (isset($request->lat) && isset($request->lon)) {
-            $longitude = $request->lon;
-            $latitude = $request->lat;
-            $radius = isset($request->radius) ? $request->radius : 20;
-            $services = $request->services ? explode(' ', $request->services) : [];
-            //$sherableApartments = Apartment::near($longitude, $latitude, $radius)->get();
-            $sherableApartments = Apartment::query()
-                ->near($longitude, $latitude, $radius)
-                ->visible()
-                ->sponsorEnd()
-                ->visits()
-                ->when($services, function ($query, $services) {
-                    foreach ($services as $service) {
-                        $query->whereHas('services', function ($subquery) use ($service) {
-                            $subquery->where('service_id', $service);
-                        });
-                    }
-                })
-                ->where('beds', '>=', $request->beds ?? 1)
-                ->where('rooms', '>=', $request->rooms ?? 1)
-                ->with(['services'])
-                ->orderBy($request->order ?? 'distance', 'asc')
-                ->get();
-
-            return response()->json([
-                'success' => true,
-                'results' => $sherableApartments,
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Lat and/or Long are missing'
-            ], 400);
-        }
+        $services = Service::all();
+        $apartmets = Apartment::query()
+        ->premium()->visible()->get();
+        return response()->json([
+            "success" => true,
+            "apartmets" => $apartmets,
+            "services" => $services
+        ]);
     }
     public function search(Request $request)
     {
         if (isset($request->lat) && isset($request->lon)) {
             $longitude = $request->lon;
             $latitude = $request->lat;
-            $radius = isset($request->radius) ? $request->radius : 20;
+            $radius = isset($request->radius) ? $request->radius : 2000;
             $services = $request->services ? explode(' ', $request->services) : [];
-            //$sherableApartments = Apartment::near($longitude, $latitude, $radius)->get();
             $sherableApartments = Apartment::query()
                 ->near($longitude, $latitude, $radius)
                 ->visible()
