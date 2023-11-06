@@ -35,18 +35,23 @@ class Apartment extends Model
             ->orderBy('distance', 'asc');
     }
 
+    public function scopeVisits(Builder $query): Builder
+    {
+        return $query->withCount('visits');
+    }
+
     public function scopeSponsorEnd(Builder $query)
     {
-        if (is_null($query->getQuery()->columns)){
+        if (is_null($query->getQuery()->columns)) {
             $query->select('*');
         }
         return $query->selectSub(function ($q) {
             $q->select('expire_date')
-            ->from('apartment_sponsorship')
-            ->whereColumn('apartment_id', 'apartments.id')
-            ->where('expire_date', '>=', now('Europe/Rome'))
-            ->latest('expire_date')
-            ->take(1);
+                ->from('apartment_sponsorship')
+                ->whereColumn('apartment_id', 'apartments.id')
+                ->where('expire_date', '>=', now('Europe/Rome'))
+                ->latest('expire_date')
+                ->take(1);
         }, 'premium');
     }
     public static function generateSlug($name, $id)

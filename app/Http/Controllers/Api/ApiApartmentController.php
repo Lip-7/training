@@ -42,6 +42,7 @@ class ApiApartmentController extends Controller
             ->near($longitude, $latitude, $radius)
             ->visible()
             ->sponsorEnd()
+            ->visits()
             ->when($services, function ($query, $services) {
                 foreach ($services as $service) {
                     $query->whereHas('services', function ($subquery) use ($service) {
