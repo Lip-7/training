@@ -7,3 +7,4 @@ import.meta.glob([
 
 import "./tomseach";
 import "./editValidation";
+import "./registerValidation";
