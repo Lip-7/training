@@ -23,8 +23,8 @@ class StoreMessageRequest extends FormRequest
     {
         return [
             'apartment_id' => ['required', 'exists:apartments,id'],
-            'name' => ['required','string','min:1','max:255'],
-            'lastname' => ['required','string','min:1','max:255'],
+            'name' => ['string','min:1','max:255'],
+            'lastname' => ['string','min:1','max:255'],
             'email' => ['required','string', 'email','max:255'],
             'text' => ['required','string','min:1'],
         ];
