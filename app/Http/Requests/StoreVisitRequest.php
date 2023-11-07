@@ -24,7 +24,7 @@ class StoreVisitRequest extends FormRequest
         return [
             'apartment_id' => 'required|integer|min:1',
             'ip' => 'required|string|min:1|max:50',
-            'date' => 'required|date',
+            'date' => 'date',
         ];
     }
 }

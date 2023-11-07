@@ -19,7 +19,7 @@ use App\Http\Controllers\VisitController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/register-visit', [VisitController::class, 'store']);
+Route::post('/registerVisit', [VisitController::class, 'store']);
 
 
 Route::get("/apartments", [ApiApartmentController::class, "index"]);
