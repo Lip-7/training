@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Geolocalization;
 use App\Http\Controllers\Api\ApiApartmentController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VisitController;
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/registerVisit', [VisitController::class, 'store']);
+Route::post('/registerMessage', [MessageController::class,'store']);
 
 
 Route::get("/apartments", [ApiApartmentController::class, "index"]);

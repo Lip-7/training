@@ -11,7 +11,7 @@ class StoreMessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'apartment_id' => ['required', 'exists:apartments,id'],
+            'name' => ['required','string','min:1','max:255'],
+            'lastname' => ['required','string','min:1','max:255'],
+            'email' => ['required','string', 'email','max:255'],
+            'text' => ['required','string','min:1'],
         ];
     }
 }

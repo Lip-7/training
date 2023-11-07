@@ -22,7 +22,7 @@ class StoreVisitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'apartment_id' => 'required|integer|min:1',
+            'apartment_id' => ['required', 'exists:apartments,id'],
             'ip' => 'required|string|min:1|max:50',
             'date' => 'date',
         ];
