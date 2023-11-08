@@ -83,8 +83,8 @@ class ApartmentController extends Controller
         // $this->authorize('edit', $apartment);
         $services = Service::all();
         $checkedServices = $apartment->services->pluck('id')->toArray();
-        $apartment->coordinates = Apartment::cleanCoordinates($apartment->coordinates);
-        return view("admin.apartments.edit", compact("services", "apartment", "checkedServices"));
+        $coordinates = Apartment::cleanCoordinates($apartment->coordinates);
+        return view("admin.apartments.edit", compact("services", "apartment", "checkedServices", "coordinates"));
     }
 
     /**
