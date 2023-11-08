@@ -29,7 +29,7 @@
             <div class="col-9 position-relative">
                 <label for="address" class="form-label">Indirizzo</label>
                 <input type="text" value="{{ old('address', $apartment->address) }}" placeholder="Inserisci l'indirizzo dell'appartamento" class="userAddressInput form-control @error('address') is-invalid @enderror" id="address" name="address">
-                <input type="hidden" name="coordinates" id="coordinates" value="">
+                <input type="hidden" name="coordinates" id="coordinates" value={{$apartment->coordinates}}>
                 <p id="error-address"></p>
                 <ul class="w-100 userAddressHints p-1"></ul>
                 @error('address')
@@ -78,17 +78,17 @@
                     </div>
                 @enderror
             </div>
-            
-            
+
+
             <div class="mb-3">
                 <h3>Visibile</h3>
-                <input type="radio" id="true" name="visible" value="1">
+                <input type="radio" id="true" name="visible" value="1" {{$apartment->visible ? 'checked' : ''}}>
                 <label for="true">si</label>
-                <input type="radio" id="false" name="visible" value="0">
+                <input type="radio" id="false" name="visible" value="0" {{$apartment->visible ? '' : 'checked'}}>
                 <label for="false">no</label>
                 <p id="error-radio"></p>
             </div>
-            
+
             <div class="mb-3 services d-flex gap-3 flex-wrap btn-group">
                 @foreach ($services as $service)
                 <div class="d-flex justify-content-center flex-column border border-2 p-2 rounded form-check">
