@@ -13,7 +13,7 @@
             @endif
 
             <div class="col-md-6">
-                <label for="name" class="form-label">Nome</label>
+                <label for="name" class="form-label">Titolo dell'annuncio</label>
                 <input type="text" class="form-control @error('rooms') is-invalid @enderror" id="name" name="name"
                     value="{{ old('name') }}">
                 @error('name')
@@ -38,7 +38,7 @@
                 <input type="text" class="form-control userAddressInput @error('address') is-invalid
                 @enderror"
                     id="address" name="address" value="{{ old('address') }}">
-                <input type="hidden" name="coordinates" id="coordinates" value="">
+                <input type="hidden" name="coordinates" id="coordinates" value="{{ old('coordinates') }}">
                 <ul class="w-100 userAddressHints p-1"></ul>
                 @error('address')
                     <div class="invalid-feedback">
@@ -88,10 +88,10 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <h3>Visibile</h3>
-                <input type="radio" id="true" name="visible" value="1">
+                <h6 >Visibile</h6>
+                <input type="radio" id="true" name="visible" value="1" {{old('visible') ? 'checked' : ''}}>
                 <label for="true">si</label>
-                <input type="radio" id="false" name="visible" value="0">
+                <input type="radio" id="false" name="visible" value="0" {{old('visible') == true || (null == old('visible')) ? '' : 'checked'}}>
                 <label for="false">no</label>
                 @error('visible')
                     <div class="invalid-feedback">
@@ -99,6 +99,8 @@
                     </div>
                 @enderror
             </div>
+            <h3>Servizi</h3>
+            <p>Seleziona i servizi che puoi mettere a disposizione del cliente</p>
             <div class="col-12 services d-flex gap-3 flex-wrap btn-group">
                 @foreach ($services as $service)
                     <div class="d-flex justify-content-center flex-column border border-2 p-2 rounded form-check">
@@ -106,7 +108,7 @@
                             class="@error('service->id') is-invalid
                         @enderror"
                             id="service-{{ $service->id }}" value="{{ $service->id }}" name="services[]"
-                            @checked(in_array($service->id, old('service', [])))>
+                            @checked(in_array($service->id, old('services', [])))>
                         <label for="service-{{ $service->id }}">{{ $service->name }}</label>
                     </div>
                 @endforeach

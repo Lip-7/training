@@ -63,7 +63,7 @@ class ApartmentController extends Controller
             $apartment->services()->attach($request->services);
         }
 
-        return redirect()->route('admin.apartments.index');
+        return redirect()->route("apartments.show", compact("apartment"));
     }
 
     /**

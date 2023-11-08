@@ -6,7 +6,7 @@
             @csrf
             @method('PUT')
             <div class="col-md-6">
-                <label for="name" class="form-label">Nome</label>
+                <label for="name" class="form-label">Titolo dell'annuncio</label>
                 <input type="text" value="{{ old('name', $apartment->name) }}" required placeholder="Inserisci il nome del tuo annuncio" class="form-control @error('name') is-invalid @enderror" id="name"
                     name="name" >
                     <p id="error-name"></p>
