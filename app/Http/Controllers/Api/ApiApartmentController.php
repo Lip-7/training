@@ -9,75 +9,67 @@ use App\Models\Sponsorship;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 use function PHPSTORM_META\map;
 
 class ApiApartmentController extends Controller
 {
+    public function premium(Request $request)
+    {
+        $apartments = Apartment::premium()
+        ->visible()
+        ->get();
+        return response()->json([
+            'success' => true,
+            'data' => $apartments
+        ]);
+    }
     public function index(Request $request)
     {
-        $requestData = $request->all();
-
         $services = Service::all();
-        $sponsorships = Sponsorship::all();
-        $visits = Visit::all();
-        //inserire un dato posizione?
-
-        $query = Apartment::query();
-
+        $apartmets = Apartment::query()
+        ->premium()->visible()->get();
+        return response()->json([
+            "success" => true,
+            "apartmets" => $apartmets,
+            "services" => $services
+        ]);
+    }
+    public function search(Request $request)
+    {
         if (isset($request->lat) && isset($request->lon)) {
             $longitude = $request->lon;
             $latitude = $request->lat;
-            $distanceInKm = 50;
-            
-            $apartments = Apartment::selectRaw(
-                "*, ST_Distance(coordinates, POINT($longitude, $latitude)) as distance"
-            )
-                ->whereRaw('ST_Distance(coordinates, POINT(?, ?)) <= ?', [$longitude, $latitude, $distanceInKm])
-                ->orderBy('distance', 'asc')
+            $radius = isset($request->radius) ? $request->radius : 2000;
+            $services = $request->services ? explode(' ', $request->services) : [];
+            $sherableApartments = Apartment::query()
+                ->near($longitude, $latitude, $radius)
+                ->visible()
+                ->sponsorEnd()
+                ->visits()
+                ->when($services, function ($query, $services) {
+                    foreach ($services as $service) {
+                        $query->whereHas('services', function ($subquery) use ($service) {
+                            $subquery->where('service_id', $service);
+                        });
+                    }
+                })
+                ->where('beds', '>=', $request->beds ?? 1)
+                ->where('rooms', '>=', $request->rooms ?? 1)
+                ->with(['services'])
+                ->orderBy($request->order ?? 'distance', 'asc')
                 ->get();
 
-            $sherableApartments = array_map(function ($apartment) {
-                $apartment['coordinates'] = DB::table('apartments')
-                    ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
-                    ->where('id', $apartment['id'])
-                    ->first();
-                return $apartment;
-            }, $apartments->toArray());
-        }
-
-
-        /*
-
-        find COORDINATES
-        $coordinates = DB::table('apartments')
-            ->selectRaw("ST_X(coordinates) as latitude, ST_Y(coordinates) as longitude")
-            ->where('id', 1)
-            ->first(); */
-
-
-        // if no apartments were found, return an error message
-        /* if (count($apartments) == 0) {
+            return response()->json([
+                'success' => true,
+                'results' => $sherableApartments,
+            ]);
+        } else {
             return response()->json([
                 'success' => false,
-                'error' => 'No apartments found',
-            ]);
-        } */
-
-
-        /* dd($apartments->toArray()); */
-
-        return response()->json([
-            'success' => true,
-            'results' => $sherableApartments,
-        ]);
-        // se la struttura offre servizi, includiamoli nella ricerca.
-        // if ($request->has("service") && $requestData["service"] != "") {
-        //     $query->whereHas("services", function ($query) use ($requestData) {
-        //         $query->select(DB::raw("apartment_id"))
-        //             ->groupBy("apartment_id")
-        //     });
-        // }
-
+                'message' => 'Lat and/or Long are missing'
+            ], 400);
+        }
     }
 }

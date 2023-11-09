@@ -15,7 +15,6 @@ class VisitController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -35,14 +34,14 @@ class VisitController extends Controller
             ['ip', '=', $request->ip],
             ['apartment_id', '=', $request->apartment_id],
         ])->get()->isEmpty();
-        
+
         if($recordNotPresent) {
             $visit = Visit::create([
                 "apartment_id" => $request->apartment_id,
                 "date" => $request->date,
                 "ip" => $request->ip
             ]);
-    
+
             return response()->json([
                 "success" => true,
                 "visit" => $visit,
