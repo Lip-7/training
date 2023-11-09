@@ -63,7 +63,7 @@ class ApartmentController extends Controller
             $apartment->services()->attach($request->services);
         }
 
-        return redirect()->route('apartments.index');
+        return redirect()->route("apartments.show", compact("apartment"));
     }
 
     /**
@@ -83,7 +83,8 @@ class ApartmentController extends Controller
         // $this->authorize('edit', $apartment);
         $services = Service::all();
         $checkedServices = $apartment->services->pluck('id')->toArray();
-        return view("admin.apartments.edit", compact("services", "apartment", "checkedServices"));
+        $coordinates = Apartment::cleanCoordinates($apartment->coordinates);
+        return view("admin.apartments.edit", compact("services", "apartment", "checkedServices", "coordinates"));
     }
 
     /**

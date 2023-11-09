@@ -16,6 +16,15 @@ class Apartment extends Model
 
     protected $guarded = [];
 
+    public static function cleanCoordinates($coords){
+
+        $coords = explode(':', $coords);
+        $lon = substr($coords[2], 0, -1);
+        $lat = explode(',', $coords[1])[0];
+        $coords = $lon. ' '. $lat;
+        return $coords;
+
+    }
     public function scopeVisible(Builder $query)
     {
         return $query->where('visible', true);
