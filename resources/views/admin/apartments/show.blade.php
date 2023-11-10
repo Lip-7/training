@@ -24,6 +24,7 @@
         </div>
     </div>
     <div class="buttons d-flex justify-content-center gap-5 mt-2">
+        <a href="{{route("messages.index", $apartment)}}" class="btn btn-primary">Messaggi</a>
         <a href="{{route("apartments.edit", $apartment)}}" class="btn btn-success">Modifica</a>
         <form action="{{route('apartments.destroy', $apartment)}}" method="POST">
             @csrf

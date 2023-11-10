@@ -28,6 +28,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource("apartments", ApartmentController::class)->parameters(["apartments" => "apartment:slug"]);
 
 Route::resource('sponsorships', SponsorshipController::class)->parameters(['sponsorships' => 'sponsorship:slug']);
-Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+
+Route::get('messages/{apartment}', [MessageController::class, 'index'])->name('messages.index');
+Route::get('messages/{apartment}/{message}', [MessageController::class, 'show'])->name('messages.show');
 
 // Route::get('/sponsorships/{sponsorship}', SponsorshipController::class, 'SponsorshipController@show')->name('sponsorships.show');

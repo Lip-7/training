@@ -16,7 +16,7 @@ class MessageController extends Controller
     public function index(Apartment $apartment)
     {
         $allMessageOfApartment = $apartment->messages()->orderBy('created_at', 'desc')->paginate('10');
-        return view('messages.index', compact('allMessageOfApartment'));
+        return view('admin.messages.index', compact('allMessageOfApartment', 'apartment'));
     }
 
     /**
@@ -45,9 +45,10 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Message $message)
+    public function show(Apartment $apartment, Message $message)
     {
-        //
+
+        return view('admin.messages.show', compact('message'));
     }
 
     /**
